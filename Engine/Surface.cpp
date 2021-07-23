@@ -15,7 +15,7 @@ Surface::Surface( const Surface& p_src )
 	delete [] pPixels;
 	
 	const size_t size = width * height;
-	pPixels = new Color[width * height];
+	pPixels = new Color[size];
 
 	for( size_t i{ 0 }; i < size; i++ )
 	{
@@ -31,7 +31,7 @@ const Surface& Surface::operator= ( const Surface& p_rhs )
 	delete [] pPixels;
 	
 	const size_t size = width * height;
-	pPixels = new Color [width * height];
+	pPixels = new Color [size];
 
 	for( size_t i{ 0 }; i < size; i++ )
 	{

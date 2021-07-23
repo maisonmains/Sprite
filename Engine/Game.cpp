@@ -24,8 +24,27 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
+	gfx( wnd ),
+	surf( 750, 550 )
 {
+	//Some kind of random circle mandala
+
+	/*
+		for( int y{}; y < surf.GetHeight(); y++ )
+		{
+			for( int x{}; x < surf.GetWidth(); x++ )
+			{
+				surf.PutPixel
+				( x, y, Color
+					( 
+						( ( x - 25 ) * ( x - 25 ) + ( y - 25 ) * ( y - 25 ) ),
+						( ( x - 50 ) * ( x - 50 ) + ( y - 50 ) * ( y - 50 ) ),
+						( ( x - 75 ) * ( x - 75 ) + ( y - 75 ) * ( y - 75 ) )
+					)
+				);
+			}
+		}
+	*/
 }
 
 void Game::Go()
@@ -42,4 +61,14 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+	/*
+		gfx.DrawSprite
+		( 
+			( Graphics::ScreenWidth / 2 ) - ( surf.GetWidth() / 2 ),
+			( Graphics::ScreenHeight / 2 ) - ( surf.GetHeight() / 2 ),
+			surf
+		);	
+	*/
+
+
 }
