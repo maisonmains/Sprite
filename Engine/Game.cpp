@@ -24,8 +24,7 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd ),
-	surf( 750, 550 )
+	gfx( wnd )
 {
 	//Some kind of random circle mandala
 
@@ -61,14 +60,10 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	/*
-		gfx.DrawSprite
-		( 
-			( Graphics::ScreenWidth / 2 ) - ( surf.GetWidth() / 2 ),
-			( Graphics::ScreenHeight / 2 ) - ( surf.GetHeight() / 2 ),
-			surf
-		);	
-	*/
-
-
+	gfx.DrawSprite
+	( 
+		( Graphics::ScreenWidth / 2 ) - ( surf.GetWidth() / 2 ),
+		( Graphics::ScreenHeight / 2 ) - ( surf.GetHeight() / 2 ),
+		surf
+	);	
 }

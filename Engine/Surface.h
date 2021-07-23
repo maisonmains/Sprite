@@ -1,14 +1,19 @@
 #pragma once
 
+#include <fstream>
+#include <string>
+#include "ChiliWin.h"
 #include "Colors.h"
 
 class Surface
 {
 public:
+	Surface( const std::string& p_filename );
 	Surface(const int& p_width, const int& p_heigth );
 	Surface(const Surface& p_src);
 	const Surface& operator=( const Surface& p_rhs );
 	~Surface();
+	void ReadImageData( std::ifstream& p_file, const BITMAPINFOHEADER& p_bmInfo );
 	const Color& GetPixel( const int& p_x, const int& p_y ) const;
 	void PutPixel( const int& p_x, const int& p_y, const Color& p_Col );
 	const int& GetWidth() const;

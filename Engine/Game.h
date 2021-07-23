@@ -41,7 +41,7 @@ private:
 private:
 	MainWindow& wnd;
 	Graphics gfx;
-	Surface surf;
+	Surface surf = "Capture.bmp";
 	/********************************/
 	/*  User Variables              */
 	/********************************/
