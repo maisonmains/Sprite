@@ -13,7 +13,7 @@ public:
 	Surface(const Surface& p_src);
 	const Surface& operator=( const Surface& p_rhs );
 	~Surface();
-	void ReadImageData( std::ifstream& p_file, const BITMAPINFOHEADER& p_bmInfo );
+	void ReadImageData( std::ifstream& p_file, const BITMAPFILEHEADER p_bmHeader, const BITMAPINFOHEADER& p_bmInfo );
 	const Color& GetPixel( const int& p_x, const int& p_y ) const;
 	void PutPixel( const int& p_x, const int& p_y, const Color& p_Col );
 	const int& GetWidth() const;
