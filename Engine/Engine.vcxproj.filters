@@ -113,5 +113,17 @@
     <Image Include="Capture.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="dib32.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="dibr.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="rgb.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="dib.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

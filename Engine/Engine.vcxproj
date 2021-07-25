@@ -231,6 +231,10 @@
   <ItemGroup>
     <Image Include="Capture.bmp" />
     <Image Include="Chili.ico" />
+    <Image Include="dib.bmp" />
+    <Image Include="dib32.bmp" />
+    <Image Include="dibr.bmp" />
+    <Image Include="rgb.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

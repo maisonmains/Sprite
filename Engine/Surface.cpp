@@ -98,7 +98,7 @@ void Surface::ReadImageData( std::ifstream& p_file, const BITMAPFILEHEADER p_bmH
 	p_file.seekg( p_bmHeader.bfOffBits, std::ios::beg );
 
 	//Padding should adjust dynamically with bit count.
-	const int padding = ( 4 - ( width * ( p_bmInfo.biBitCount ) ) % 4 ) % 4;
+	const int padding = ( 4 - ( ( width * ( p_bmInfo.biBitCount / 8 ) ) % 4 ) ) % 4;
 
 	//In the event of bottom->top ordered data
 
@@ -106,17 +106,21 @@ void Surface::ReadImageData( std::ifstream& p_file, const BITMAPFILEHEADER p_bmH
 	{
 		for( int x{}; x < width; x++ )
 		{
-			int a{};
-			//Non-4 byte data 
-			if( padding < 1 )
+			if( p_bmInfo.biBitCount == 32 )
 			{
-				a = p_file.get();
+				const int a{ p_file.get() };
+				const int b{ p_file.get() };
+				const int g{ p_file.get() };
+				const int r{ p_file.get() };
+				PutPixel( x, y, Color( r, g, b, a ) );
 			}
-			const int b{ p_file.get() };
-			const int g{ p_file.get() };
-			const int r{ p_file.get() };
-
-			PutPixel( x, y, Color( r, g, b, a ) );
+			else
+			{
+				const int b{ p_file.get() };
+				const int g{ p_file.get() };
+				const int r{ p_file.get() };
+				PutPixel( x, y, Color( r, g, b ) );
+			}
 			p_file.seekg( padding, std::ios::cur );
 		}
 	}
