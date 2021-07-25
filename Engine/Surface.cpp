@@ -71,6 +71,9 @@ void Surface::ReadImageData( std::ifstream& p_file, const BITMAPFILEHEADER p_bmH
 
 	width = p_bmInfo.biWidth;
 	height = p_bmInfo.biHeight;
+	int yStart{};
+	int yEnd{};
+	int dy{};
 	/*
 	* Since positive bitHeight == read data bottom to top,
 	* negative height == top to bottom, thus, we'll need to 
@@ -79,6 +82,15 @@ void Surface::ReadImageData( std::ifstream& p_file, const BITMAPFILEHEADER p_bmH
 	if( height < 0 )
 	{
 		height *= -1;
+		yStart = 0;
+		yEnd = height;
+		dy = 1;
+	}
+	else
+	{
+		yStart = height - 1;
+		yEnd = -1;
+		dy = -1;
 	}
 	pPixels = new Color [width * height];
 
@@ -89,69 +101,23 @@ void Surface::ReadImageData( std::ifstream& p_file, const BITMAPFILEHEADER p_bmH
 	const int padding = ( 4 - ( width * ( p_bmInfo.biBitCount ) ) % 4 ) % 4;
 
 	//In the event of bottom->top ordered data
-	if( p_bmInfo.biHeight > 0 )
+
+	for( int y{yStart}; y != yEnd; y += dy )
 	{
-		for( int y{ height - 1 }; y >= 0; y-- )
+		for( int x{}; x < width; x++ )
 		{
+			int a{};
 			//Non-4 byte data 
-			if( padding > 0 )
+			if( padding < 1 )
 			{
-				for( int x{}; x < width; x++ )
-				{
-					const int b{ p_file.get() };
-					const int g{ p_file.get() };
-					const int r{ p_file.get() };
-
-					PutPixel( x, y, Color( r, g, b ) );
-				}
-				p_file.seekg( padding, std::ios::cur );
+				a = p_file.get();
 			}
-			else
-			{
-				//4 byte data
-				for( int x{}; x < width; x++ )
-				{
-					const int a{ p_file.get() };
-					const int b{ p_file.get() };
-					const int g{ p_file.get() };
-					const int r{ p_file.get() };
+			const int b{ p_file.get() };
+			const int g{ p_file.get() };
+			const int r{ p_file.get() };
 
-					PutPixel( x, y, Color( r, g, b, a ) );
-				}
-			}
-		}
-	}
-	//In the event of top->bottom ordered data
-	else
-	{
-		for( int y{}; y < height; y++ )
-		{
-			if( padding > 0 )
-			{
-				//Non-4 byte data 
-				for( int x{}; x < width; x++ )
-				{
-					const int b{ p_file.get() };
-					const int g{ p_file.get() };
-					const int r{ p_file.get() };
-
-					PutPixel( x, y, Color( r, g, b ) );
-				}
-				p_file.seekg( padding, std::ios::cur );
-			}
-			else
-			{
-				//4 byte data
-				for( int x{}; x < width; x++ )
-				{
-					const int a{ p_file.get() };
-					const int b{ p_file.get() };
-					const int g{ p_file.get() };
-					const int r{ p_file.get() };
-
-					PutPixel( x, y, Color( r, g, b, a ) );
-				}
-			}
+			PutPixel( x, y, Color( r, g, b, a ) );
+			p_file.seekg( padding, std::ios::cur );
 		}
 	}
 }
