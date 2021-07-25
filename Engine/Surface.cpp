@@ -121,8 +121,8 @@ void Surface::ReadImageData( std::ifstream& p_file, const BITMAPFILEHEADER p_bmH
 				const int r{ p_file.get() };
 				PutPixel( x, y, Color( r, g, b ) );
 			}
-			p_file.seekg( padding, std::ios::cur );
 		}
+		p_file.seekg( padding, std::ios::cur );
 	}
 }
 
