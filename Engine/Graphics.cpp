@@ -316,6 +316,11 @@ void Graphics::PutPixel( int x,int y,Color c )
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
 
+const RectI Graphics::GetScreenRect() const
+{
+	return RectI{ 0, Graphics::ScreenWidth, 0, Graphics::ScreenHeight };
+}
+
 void Graphics::DrawSprite( const int& p_x, const int& p_y, const Surface& p_surf )
 {
 	assert( p_x >= 0 );
@@ -323,16 +328,20 @@ void Graphics::DrawSprite( const int& p_x, const int& p_y, const Surface& p_surf
 	assert( p_y >= 0 );
 	assert( p_y < int( Graphics::ScreenHeight ) );
 
-	const int width = p_surf.GetWidth();
-	const int height = p_surf.GetHeight();
+	DrawSprite( p_x - 16, p_y - 24, { 32, ( 32 * 2 ), 48, ( 48 * 2 ) }, p_surf );
+}
 
-	for( int y{}; y < height; y++ )
+void Graphics::DrawSprite( const int& p_x, const int& p_y, const RectI& srcRect, const Surface& p_surf )
+{
+
+	for( int y{ srcRect.top }; y < srcRect.bottom; y++ )
 	{
-		for( int x{}; x < width; x++ )
+		for( int x{ srcRect.left }; x < srcRect.right; x++ )
 		{
-			PutPixel( ( p_x + x ), ( p_y + y ), p_surf.GetPixel( x, y ) );
+			PutPixel( ( p_x + ( x - srcRect.left ) ), ( p_y + ( y - srcRect.top ) ), p_surf.GetPixel( x, y ) );
 		}
 	}
+
 }
 
 //////////////////////////////////////////////////

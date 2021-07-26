@@ -41,7 +41,7 @@ private:
 private:
 	MainWindow& wnd;
 	Graphics gfx;
-	Surface surf = "rgb.bmp";
+	Surface surf = "marle32x48.bmp";
 	/********************************/
 	/*  User Variables              */
 	/********************************/

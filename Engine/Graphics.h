@@ -25,6 +25,7 @@
 #include "ChiliException.h"
 #include "Colors.h"
 #include "Surface.h"
+#include "RectI.h"
 
 class Graphics
 {
@@ -58,7 +59,9 @@ public:
 		PutPixel( x,y,{ unsigned char( r ),unsigned char( g ),unsigned char( b ) } );
 	}
 	void PutPixel( int x,int y,Color c );
+	const RectI GetScreenRect() const;
 	void DrawSprite( const int& p_x, const int& p_y, const Surface& p_surf );
+	void DrawSprite( const int& p_x, const int& p_y, const RectI& srcRect, const Surface& p_surf );
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;
