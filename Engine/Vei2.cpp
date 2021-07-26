@@ -8,12 +8,25 @@ Vei2::Vei2( int x_in,int y_in )
 {
 }
 
+Vei2::Vei2( const Vei2& src )
+{
+	x = src.x;
+	y = src.y;
+}
+
+const Vei2& Vei2::operator=( const Vei2& rhs )
+{
+	x = rhs.x;
+	y = rhs.y;
+	return *this;
+}
+
 Vei2 Vei2::operator+( const Vei2& rhs ) const
 {
 	return Vei2( x + rhs.x,y + rhs.y );
 }
 
-Vei2& Vei2::operator+=( const Vei2& rhs )
+const Vei2& Vei2::operator+=( const Vei2& rhs )
 {
 	return *this = *this + rhs;
 }
@@ -23,7 +36,7 @@ Vei2 Vei2::operator*( int rhs ) const
 	return Vei2( x * rhs,y * rhs );
 }
 
-Vei2& Vei2::operator*=( int rhs )
+const Vei2& Vei2::operator*=( int rhs )
 {
 	return *this = *this * rhs;
 }
@@ -33,7 +46,7 @@ Vei2 Vei2::operator-( const Vei2& rhs ) const
 	return Vei2( x - rhs.x,y - rhs.y );
 }
 
-Vei2& Vei2::operator-=( const Vei2& rhs )
+const Vei2& Vei2::operator-=( const Vei2& rhs )
 {
 	return *this = *this - rhs;
 }
@@ -43,11 +56,40 @@ Vei2 Vei2::operator/( int rhs ) const
 	return Vei2( x / rhs,y / rhs );
 }
 
-Vei2& Vei2::operator/=( int rhs )
+const Vei2& Vei2::operator/=( int rhs )
 {
 	return *this = *this / rhs;
 }
 
+const bool Vei2::operator==( const Vei2& rhs ) const
+{
+	return x == rhs.x && y == rhs.y;
+}
+
+const bool Vei2::operator!=( const Vei2& rhs ) const
+{
+	return !( *this == rhs );
+}
+
+const bool Vei2::operator>( const Vei2& rhs ) const
+{
+	return x > rhs.x || y > rhs.y;
+}
+
+const bool Vei2::operator<( const Vei2& rhs ) const
+{
+	return x < rhs.x || y < rhs.y;
+}
+
+const bool Vei2::operator>=( const Vei2& rhs ) const
+{
+	return x >= rhs.x || y >= rhs.y;
+}
+
+const bool Vei2::operator<=( const Vei2& rhs ) const
+{
+	return x <= rhs.x || y <= rhs.y;
+}
 float Vei2::GetLength() const
 {
 	return std::sqrt( float( GetLengthSq() ) );

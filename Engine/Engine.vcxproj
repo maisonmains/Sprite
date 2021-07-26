@@ -151,7 +151,7 @@
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SoundEffect.h" />
     <ClInclude Include="Surface.h" />
-    <ClInclude Include="Vei2.h" />
+    <ClInclude Include="VeI2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="COMInitializer.cpp" />
@@ -165,7 +165,7 @@
     <ClCompile Include="RectI.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Surface.cpp" />
-    <ClCompile Include="Vei2.cpp" />
+    <ClCompile Include="VeI2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="FramebufferPS.hlsl">
@@ -238,6 +238,7 @@
     <Image Include="dib.bmp" />
     <Image Include="dib32.bmp" />
     <Image Include="dibr.bmp" />
+    <Image Include="marle32x48.bmp" />
     <Image Include="rgb.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

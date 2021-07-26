@@ -26,6 +26,7 @@
 #include "Colors.h"
 #include "Surface.h"
 #include "RectI.h"
+#include "Vei2.h"
 
 class Graphics
 {
@@ -60,22 +61,23 @@ public:
 	}
 	void PutPixel( int x,int y,Color c );
 	const RectI GetScreenRect() const;
-	void DrawSprite( const int& p_x, const int& p_y, const Surface& p_surf );
-	void DrawSprite( const int& p_x, const int& p_y, const RectI& srcRect, const Surface& p_surf );
+	void DrawSprite( const Vei2& p_topLeft, const Surface& p_surf );
+	void DrawSprite( Vei2& p_topLeft, const RectI& p_srcRect, const Surface& p_surf );
+	void DrawClipableSprite( Vei2& p_topLeft, const RectI& p_clipRegion, const RectI& p_srcRect, const Surface& p_surf );
 	~Graphics();
 private:
-	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;
-	Microsoft::WRL::ComPtr<ID3D11Device>				pDevice;
-	Microsoft::WRL::ComPtr<ID3D11DeviceContext>			pImmediateContext;
-	Microsoft::WRL::ComPtr<ID3D11RenderTargetView>		pRenderTargetView;
-	Microsoft::WRL::ComPtr<ID3D11Texture2D>				pSysBufferTexture;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	pSysBufferTextureView;
-	Microsoft::WRL::ComPtr<ID3D11PixelShader>			pPixelShader;
-	Microsoft::WRL::ComPtr<ID3D11VertexShader>			pVertexShader;
-	Microsoft::WRL::ComPtr<ID3D11Buffer>				pVertexBuffer;
-	Microsoft::WRL::ComPtr<ID3D11InputLayout>			pInputLayout;
-	Microsoft::WRL::ComPtr<ID3D11SamplerState>			pSamplerState;
-	D3D11_MAPPED_SUBRESOURCE							mappedSysBufferTexture;
+	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain{};
+	Microsoft::WRL::ComPtr<ID3D11Device>				pDevice{};
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext>			pImmediateContext{};
+	Microsoft::WRL::ComPtr<ID3D11RenderTargetView>		pRenderTargetView{};
+	Microsoft::WRL::ComPtr<ID3D11Texture2D>				pSysBufferTexture{};
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	pSysBufferTextureView{};
+	Microsoft::WRL::ComPtr<ID3D11PixelShader>			pPixelShader{};
+	Microsoft::WRL::ComPtr<ID3D11VertexShader>			pVertexShader{};
+	Microsoft::WRL::ComPtr<ID3D11Buffer>				pVertexBuffer{};
+	Microsoft::WRL::ComPtr<ID3D11InputLayout>			pInputLayout{};
+	Microsoft::WRL::ComPtr<ID3D11SamplerState>			pSamplerState{};
+	D3D11_MAPPED_SUBRESOURCE							mappedSysBufferTexture{};
 	Color*                                              pSysBuffer = nullptr;
 public:
 	static constexpr int ScreenWidth = 800;
