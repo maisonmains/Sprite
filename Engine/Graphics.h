@@ -61,9 +61,25 @@ public:
 	}
 	void PutPixel( int x,int y,Color c );
 	const RectI GetScreenRect() const;
+
+	void DrawSpriteNonChroma( const Vei2& p_topLeft, const Surface& p_surf );
+	void DrawSpriteNonChroma( Vei2& p_topLeft, const RectI& p_srcRect, const Surface& p_surf );
+	void DrawSpriteNonChroma( 
+		Vei2& p_topLeft, 
+		const RectI& p_clipRegion, 
+		const RectI& p_srcRect, 
+		const Surface& p_surf
+	);
+
 	void DrawSprite( const Vei2& p_topLeft, const Surface& p_surf );
 	void DrawSprite( Vei2& p_topLeft, const RectI& p_srcRect, const Surface& p_surf );
-	void DrawClipableSprite( Vei2& p_topLeft, const RectI& p_clipRegion, const RectI& p_srcRect, const Surface& p_surf );
+	void DrawSprite(
+		Vei2& p_topLeft,
+		const RectI& p_clipRegion,
+		const RectI& p_srcRect,
+		const Surface& p_surf,
+		Color p_chroma = Colors::Magenta
+	);
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain{};

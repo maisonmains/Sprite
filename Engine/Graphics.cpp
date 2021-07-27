@@ -321,48 +321,55 @@ const RectI Graphics::GetScreenRect() const
 	return RectI{ 0, Graphics::ScreenWidth, 0, Graphics::ScreenHeight };
 }
 
-void Graphics::DrawSprite( const Vei2& p_topLeft, const Surface& p_surf )
+void Graphics::DrawSpriteNonChroma( const Vei2& p_topLeft, const Surface& p_surf )
 {
 	assert( p_topLeft.x >= 0 );
 	assert( p_topLeft.x < int( Graphics::ScreenWidth ) );
 	assert( p_topLeft.y >= 0 );
 	assert( p_topLeft.y < int( Graphics::ScreenHeight ) );
 
-	const RectI sourceRegion( { 32, ( 64 ), 48, ( 96 ) } );
-	Vei2 topLeft( Vei2( p_topLeft.x, p_topLeft.y ) - Vei2( ( sourceRegion.GetWidth() / 2 ), sourceRegion.GetHeight() / 2 ) );
-	DrawSprite( topLeft, sourceRegion , p_surf );
+	Vei2 topLeft
+	( 
+		Vei2( p_topLeft.x, p_topLeft.y ) - 
+		Vei2( ( p_surf.GetRect().GetWidth() / 2 ), p_surf.GetRect().GetHeight() / 2 ) 
+	);
+	DrawSpriteNonChroma( topLeft, p_surf.GetRect(), p_surf );
 }
 
-void Graphics::DrawSprite( Vei2& p_topLeft, const RectI& p_srcRect, const Surface& p_surf )
+void Graphics::DrawSpriteNonChroma( Vei2& p_topLeft, const RectI& p_srcRect, const Surface& p_surf )
 {
-	DrawClipableSprite( p_topLeft, GetScreenRect(), p_srcRect, p_surf );
+	DrawSpriteNonChroma( p_topLeft, GetScreenRect(), p_srcRect, p_surf );
 } 
 
-void Graphics::DrawClipableSprite( Vei2& p_topLeft, const RectI& p_clipRegion, const RectI& p_srcRect, const Surface& p_surf )
+void Graphics::DrawSpriteNonChroma
+(
+	Vei2& p_topLeft,
+	const RectI& p_clipRegion,
+	const RectI& p_srcRect,
+	const Surface& p_surf
+)
 {
-	const Vei2 clipRegionTopLeft{ p_clipRegion.left, p_clipRegion.top };
-	const Vei2 clipRegionBottomRight{ p_clipRegion.right, p_clipRegion.bottom };
 	Vei2 srcRectTopLeft{ p_srcRect.left, p_srcRect.top };
 	Vei2 srcRectBottomRight{ p_srcRect.right, p_srcRect.bottom };
 
-	if( p_topLeft.x < clipRegionTopLeft.x )
+	if( p_topLeft.x < p_clipRegion.left )
 	{
-		srcRectTopLeft.x -= p_topLeft.x - clipRegionTopLeft.x;
-		p_topLeft.x = clipRegionTopLeft.x;
+		srcRectTopLeft.x -= p_topLeft.x - p_clipRegion.left;
+		p_topLeft.x = p_clipRegion.left;
 	}
-	if( p_topLeft.y < clipRegionTopLeft.y )
+	if( p_topLeft.y < p_clipRegion.top )
 	{
-		srcRectTopLeft.y -= p_topLeft.y - clipRegionTopLeft.y;
-		p_topLeft.y = clipRegionTopLeft.y;
+		srcRectTopLeft.y -= p_topLeft.y - p_clipRegion.top;
+		p_topLeft.y = p_clipRegion.top;
 	}
 
-	else if( p_topLeft.x + ( p_srcRect.GetWidth() ) >= clipRegionBottomRight.x )
+	else if( p_topLeft.x + ( p_srcRect.GetWidth() ) >= p_clipRegion.right )
 	{
-		srcRectBottomRight.x -= ( p_topLeft.x + p_srcRect.GetWidth() ) - clipRegionBottomRight.x ;
+		srcRectBottomRight.x -= ( p_topLeft.x + p_srcRect.GetWidth() ) - p_clipRegion.right;
 	}
-	if( p_topLeft.y + ( p_srcRect.GetHeight() ) >= clipRegionBottomRight.y )
+	if( p_topLeft.y + ( p_srcRect.GetHeight() ) >= p_clipRegion.bottom )
 	{
-		srcRectBottomRight.y -= ( p_topLeft.y + p_srcRect.GetHeight() ) - clipRegionBottomRight.y;
+		srcRectBottomRight.y -= ( p_topLeft.y + p_srcRect.GetHeight() ) - p_clipRegion.bottom;
 	}
 
 	for( int y{ srcRectTopLeft.y }; y < srcRectBottomRight.y; y++ )
@@ -374,6 +381,65 @@ void Graphics::DrawClipableSprite( Vei2& p_topLeft, const RectI& p_clipRegion, c
 	}
 }
 
+void Graphics::DrawSprite( const Vei2& p_topLeft, const Surface& p_surf )
+{
+	assert( p_topLeft.x >= 0 );
+	assert( p_topLeft.x < int( Graphics::ScreenWidth ) );
+	assert( p_topLeft.y >= 0 );
+	assert( p_topLeft.y < int( Graphics::ScreenHeight ) );
+
+	const RectI sprite{ 32, 32 * 2, 48, 48 * 2 };
+	Vei2 topLeft
+	(
+		Vei2( p_topLeft.x, p_topLeft.y ) -
+		Vei2( ( sprite.GetWidth() / 2 ), sprite.GetHeight() / 2 )
+	);
+
+	DrawSprite( topLeft, sprite, p_surf );
+}
+
+void Graphics::DrawSprite( Vei2& p_topLeft, const RectI& p_srcRect, const Surface& p_surf )
+{
+	DrawSprite( p_topLeft, GetScreenRect(), p_srcRect, p_surf );
+}
+
+void Graphics::DrawSprite( Vei2& p_topLeft, const RectI& p_clipRegion, const RectI& p_srcRect, const Surface& p_surf, Color p_chroma )
+{
+	Vei2 srcRectTopLeft{ p_srcRect.left, p_srcRect.top };
+	Vei2 srcRectBottomRight{ p_srcRect.right, p_srcRect.bottom };
+
+	if( p_topLeft.x < p_clipRegion.left )
+	{
+		srcRectTopLeft.x -= p_topLeft.x - p_clipRegion.left;
+		p_topLeft.x = p_clipRegion.left;
+	}
+	if( p_topLeft.y < p_clipRegion.top )
+	{
+		srcRectTopLeft.y -= p_topLeft.y - p_clipRegion.top;
+		p_topLeft.y = p_clipRegion.top;
+	}
+
+	else if( p_topLeft.x + ( p_srcRect.GetWidth() ) >= p_clipRegion.right )
+	{
+		srcRectBottomRight.x -= ( p_topLeft.x + p_srcRect.GetWidth() ) - p_clipRegion.right;
+	}
+	if( p_topLeft.y + ( p_srcRect.GetHeight() ) >= p_clipRegion.bottom )
+	{
+		srcRectBottomRight.y -= ( p_topLeft.y + p_srcRect.GetHeight() ) - p_clipRegion.bottom;
+	}
+
+	for( int y{ srcRectTopLeft.y }; y < srcRectBottomRight.y; y++ )
+	{
+		for( int x{ srcRectTopLeft.x }; x < srcRectBottomRight.x; x++ )
+		{
+			const Color pixel{ p_surf.GetPixel( x, y ) };
+			if( pixel != p_chroma )
+			{
+				PutPixel( ( p_topLeft.x + ( x - srcRectTopLeft.x ) ), ( p_topLeft.y + ( y - srcRectTopLeft.y ) ), pixel );
+			}
+		}
+	}
+}
 
 //////////////////////////////////////////////////
 //           Graphics Exception

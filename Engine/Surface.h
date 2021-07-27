@@ -4,6 +4,7 @@
 #include <string>
 #include "ChiliWin.h"
 #include "Colors.h"
+#include "RectI.h"
 
 class Surface
 {
@@ -18,6 +19,7 @@ public:
 	void PutPixel( const int& p_x, const int& p_y, const Color& p_Col );
 	const int& GetWidth() const;
 	const int& GetHeight() const;
+	const RectI GetRect() const;
 
 private:
 	int width{};
