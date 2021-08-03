@@ -60,7 +60,9 @@ public:
 		PutPixel( x,y,{ unsigned char( r ),unsigned char( g ),unsigned char( b ) } );
 	}
 	void PutPixel( int x,int y,Color c );
+
 	const RectI GetScreenRect() const;
+	const Vei2 GetScreenCenter() const;
 
 	void DrawSpriteNonChroma( const Vei2& p_topLeft, const Surface& p_surf );
 	void DrawSpriteNonChroma( Vei2& p_topLeft, const RectI& p_srcRect, const Surface& p_surf );

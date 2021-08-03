@@ -24,7 +24,7 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include "FrameTimer.h"
-#include "Animation.h"
+#include "Character.h"
 
 class Game
 {
@@ -43,8 +43,7 @@ private:
 	MainWindow& wnd;
 	Graphics gfx;
 	FrameTimer ft{};
-	Surface surf{ Surface( "Sprites\\link90x90.bmp" ) };
-	Animation anima{ Animation( surf, 4, 0.25f, Vei2{ 90, ( 90 * 3 ) } ) };
+	Character link;
 	/********************************/
 	/*  User Variables              */
 	/********************************/

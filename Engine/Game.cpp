@@ -56,17 +56,11 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	Vei2 pos{ wnd.mouse.GetPosX(), wnd.mouse.GetPosY() };
-
-	if( pos <= Vei2{ 0,0 } )
-	{
-		pos = Vei2{ 0,0 };
-	}
-
-	anima.Update( pos, ft.Mark() );
+	Vec2 dir = { 0.0f, 0.0f };
+	link.Update( wnd, dir, ft.Mark() );	
 }
 
 void Game::ComposeFrame()
 {
-	anima.Draw( gfx );
+	link.Draw( gfx );
 }

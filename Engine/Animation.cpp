@@ -1,12 +1,12 @@
 #pragma once
 #include "Animation.h"
 
-Animation::Animation( Surface& p_surf, const int frameCount , const float p_maxHoldTime, const Vei2& topLeft )
+Animation::Animation( Surface& p_surf, const int& frameCount , const float& p_maxHoldTime, const Vei2& p_pos, const Vei2& topLeft, const int& p_dims )
 	:
 	surf( p_surf ), 
-	dimensions( 90 ),
+	dims( p_dims ),
 	maxHoldTime( p_maxHoldTime ),
-	pos( pos )
+	pos( p_pos )
 {
 	frames.reserve( frameCount );
 
@@ -16,9 +16,9 @@ Animation::Animation( Surface& p_surf, const int frameCount , const float p_maxH
 		( 
 			RectI
 			{ 
-				( topLeft.x + ( dimensions * i ) ), 
-				( topLeft.x + ( dimensions * ( i + 1 ) ) ),
-				topLeft.y, topLeft.y + dimensions
+				( topLeft.x + ( dims * i ) ), 
+				( topLeft.x + ( dims * ( i + 1 ) ) ),
+				topLeft.y, topLeft.y + dims
 			} 
 		);
 	}
@@ -31,10 +31,10 @@ void Animation::Draw( Graphics& gfx )
 
 void Animation::Draw( Graphics& gfx, const RectI& clipRegion )
 {
-	gfx.DrawSprite( pos, clipRegion, frames [frameIndex], surf );
+	gfx.DrawSprite( pos, clipRegion, frames[frameIndex], surf );
 }
 
-void Animation::Update( const Vei2& p_pos, const float dt )
+void Animation::Update( const Vei2& p_pos, const float& dt )
 {
 	heldTime += dt;
 	if( heldTime >= maxHoldTime )

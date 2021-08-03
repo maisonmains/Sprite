@@ -321,6 +321,11 @@ const RectI Graphics::GetScreenRect() const
 	return RectI{ 0, Graphics::ScreenWidth, 0, Graphics::ScreenHeight };
 }
 
+const Vei2 Graphics::GetScreenCenter() const
+{
+	return GetScreenRect().GetCenter();
+}
+
 void Graphics::DrawSpriteNonChroma( const Vei2& p_topLeft, const Surface& p_surf )
 {
 	assert( p_topLeft.x >= 0 );
@@ -395,10 +400,6 @@ void Graphics::DrawSprite( const Vei2& p_topLeft, const Surface& p_surf )
 
 void Graphics::DrawSprite( Vei2& p_topLeft, const RectI& p_srcRect, const Surface& p_surf )
 {
-	assert( p_topLeft.x >= 0 );
-	assert( p_topLeft.x < int( Graphics::ScreenWidth ) );
-	assert( p_topLeft.y >= 0 );
-	assert( p_topLeft.y < int( Graphics::ScreenHeight ) );
 	DrawSprite( p_topLeft, GetScreenRect(), p_srcRect, p_surf );
 }
 

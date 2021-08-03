@@ -9,6 +9,7 @@
 class Surface
 {
 public:
+	Surface() = default;
 	Surface( const std::string& p_filename );
 	Surface(const int& p_width, const int& p_heigth );
 	Surface(const Surface& p_src);

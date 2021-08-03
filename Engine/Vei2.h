@@ -23,6 +23,7 @@ public:
 	const bool operator<=( const Vei2& rhs ) const;
 	float GetLength() const;
 	int GetLengthSq() const;
+
 public:
 	int x;
 	int y;
