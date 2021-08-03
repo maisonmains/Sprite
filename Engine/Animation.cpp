@@ -1,9 +1,11 @@
 #pragma once
 #include "Animation.h"
 
-Animation::Animation( const int frameCount, const Vei2& topLeft )
+Animation::Animation( Surface& p_surf, const int frameCount , const float p_maxHoldTime, const Vei2& topLeft )
 	:
+	surf( p_surf ), 
 	dimensions( 90 ),
+	maxHoldTime( p_maxHoldTime ),
 	pos( pos )
 {
 	frames.reserve( frameCount );
@@ -32,7 +34,7 @@ void Animation::Draw( Graphics& gfx, const RectI& clipRegion )
 	gfx.DrawSprite( pos, clipRegion, frames [frameIndex], surf );
 }
 
-void Animation::Update( const float dt )
+void Animation::Update( const Vei2& p_pos, const float dt )
 {
 	heldTime += dt;
 	if( heldTime >= maxHoldTime )
@@ -40,9 +42,13 @@ void Animation::Update( const float dt )
 		heldTime -= maxHoldTime;
 		AdvanceFrame();
 	}
+	pos = p_pos;
 }
 
 void Animation::AdvanceFrame()
 {
-	frameIndex++;
+	if( frameIndex++ >= frames.size() - 1 )
+	{
+		frameIndex = 0;
+	}
 }

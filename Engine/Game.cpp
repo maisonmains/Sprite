@@ -62,6 +62,8 @@ void Game::UpdateModel()
 	{
 		pos = Vei2{ 0,0 };
 	}
+
+	anima.Update( pos, ft.Mark() );
 }
 
 void Game::ComposeFrame()

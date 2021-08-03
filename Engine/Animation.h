@@ -7,7 +7,7 @@
 class Animation
 {
 public:
-	Animation( const int frameCount, const Vei2& topLeft );
+	Animation( Surface& p_surf, const int frameCount, const float p_maxHoldTime, const Vei2& topLeft );
 	void Draw( Graphics& gfx );
 	void Draw( Graphics& gfx, const RectI& clipRegion );
 	void Update( const Vei2& p_pos, const float dt );
@@ -16,7 +16,7 @@ private:
 	void AdvanceFrame();
 
 private:
-	Surface& surf{ "Sprites\\link90x90.bmp" };
+	Surface& surf;
 	const int dimensions{};
 
 	std::vector<RectI> frames{};
