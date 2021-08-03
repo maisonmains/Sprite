@@ -136,6 +136,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="ChiliException.h" />
     <ClInclude Include="ChiliWin.h" />
     <ClInclude Include="Colors.h" />
@@ -154,7 +155,8 @@
     <ClInclude Include="VeI2.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Colors.cpp" />
+    <ClCompile Include="Aimation.cpp" />
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="COMInitializer.cpp" />
     <ClCompile Include="DXErr.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -234,13 +236,14 @@
     <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Capture.bmp" />
     <Image Include="Chili.ico" />
-    <Image Include="dib.bmp" />
-    <Image Include="dib32.bmp" />
-    <Image Include="dibr.bmp" />
-    <Image Include="marle32x48.bmp" />
-    <Image Include="rgb.bmp" />
+    <Image Include="Sprites\Capture.bmp" />
+    <Image Include="Sprites\dib.bmp" />
+    <Image Include="Sprites\dib32.bmp" />
+    <Image Include="Sprites\dibr.bmp" />
+    <Image Include="Sprites\link90x90.bmp" />
+    <Image Include="Sprites\marle32x48.bmp" />
+    <Image Include="Sprites\rgb.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

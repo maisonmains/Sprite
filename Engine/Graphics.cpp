@@ -389,17 +389,16 @@ void Graphics::DrawSprite( const Vei2& p_topLeft, const Surface& p_surf )
 	assert( p_topLeft.y < int( Graphics::ScreenHeight ) );
 
 	const RectI sprite{ 32, 32 * 2, 48, 48 * 2 };
-	Vei2 topLeft
-	(
-		Vei2( p_topLeft.x, p_topLeft.y ) -
-		Vei2( ( sprite.GetWidth() / 2 ), sprite.GetHeight() / 2 )
-	);
 
-	DrawSprite( topLeft, sprite, p_surf );
+	DrawSprite( Vei2{ p_topLeft }, sprite, p_surf );
 }
 
 void Graphics::DrawSprite( Vei2& p_topLeft, const RectI& p_srcRect, const Surface& p_surf )
 {
+	assert( p_topLeft.x >= 0 );
+	assert( p_topLeft.x < int( Graphics::ScreenWidth ) );
+	assert( p_topLeft.y >= 0 );
+	assert( p_topLeft.y < int( Graphics::ScreenHeight ) );
 	DrawSprite( p_topLeft, GetScreenRect(), p_srcRect, p_surf );
 }
 

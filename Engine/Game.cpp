@@ -56,9 +56,15 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	Vei2 pos{ wnd.mouse.GetPosX(), wnd.mouse.GetPosY() };
+
+	if( pos <= Vei2{ 0,0 } )
+	{
+		pos = Vei2{ 0,0 };
+	}
 }
 
 void Game::ComposeFrame()
 {
-	gfx.DrawSprite( { wnd.mouse.GetPosX(), wnd.mouse.GetPosY() }, surf );
+	anima.Draw( gfx );
 }

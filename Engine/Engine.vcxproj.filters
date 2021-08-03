@@ -66,6 +66,9 @@
     <ClInclude Include="VeI2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp">
@@ -104,7 +107,10 @@
     <ClCompile Include="RectI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Colors.cpp">
+    <ClCompile Include="Aimation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -125,22 +131,25 @@
     <Image Include="Chili.ico">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Capture.bmp">
+    <Image Include="Sprites\Capture.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="dib32.bmp">
+    <Image Include="Sprites\dib.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="dibr.bmp">
+    <Image Include="Sprites\dib32.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="rgb.bmp">
+    <Image Include="Sprites\dibr.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="dib.bmp">
+    <Image Include="Sprites\link90x90.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="marle32x48.bmp">
+    <Image Include="Sprites\marle32x48.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Sprites\rgb.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

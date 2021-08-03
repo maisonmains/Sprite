@@ -23,7 +23,7 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
-#include "Surface.h"
+#include "Animation.h"
 
 class Game
 {
@@ -41,7 +41,7 @@ private:
 private:
 	MainWindow& wnd;
 	Graphics gfx;
-	Surface surf = "marle32x48.bmp";
+	Animation anima = Animation( 1, Vei2{ 0, ( 90 * 3 ) } );
 	/********************************/
 	/*  User Variables              */
 	/********************************/
