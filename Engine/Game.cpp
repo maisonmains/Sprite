@@ -63,4 +63,5 @@ void Game::UpdateModel()
 void Game::ComposeFrame()
 {
 	link.Draw( gfx );
+	dirtyWerds.DrawText( "I'm Stuck in her mud. \nHelp...", gfx, wnd.mouse.GetPos() );
 }

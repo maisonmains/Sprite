@@ -143,6 +143,7 @@
     <ClInclude Include="Colors.h" />
     <ClInclude Include="COMInitializer.h" />
     <ClInclude Include="DXErr.h" />
+    <ClInclude Include="Font.h" />
     <ClInclude Include="FrameTimer.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Graphics.h" />
@@ -163,6 +164,7 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="COMInitializer.cpp" />
     <ClCompile Include="DXErr.cpp" />
+    <ClCompile Include="Font.cpp" />
     <ClCompile Include="FrameTimer.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Graphics.cpp" />
@@ -247,6 +249,7 @@
     <Image Include="Sprites\dib.bmp" />
     <Image Include="Sprites\dib32.bmp" />
     <Image Include="Sprites\dibr.bmp" />
+    <Image Include="Sprites\Fixedsys16x28.bmp" />
     <Image Include="Sprites\link90x90.bmp" />
     <Image Include="Sprites\marle32x48.bmp" />
     <Image Include="Sprites\rgb.bmp" />

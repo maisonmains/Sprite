@@ -25,6 +25,7 @@
 #include "Graphics.h"
 #include "FrameTimer.h"
 #include "Character.h"
+#include "Font.h"
 
 class Game
 {
@@ -43,7 +44,8 @@ private:
 	MainWindow& wnd;
 	Graphics gfx;
 	FrameTimer ft{};
-	Character link;
+	Character link{ "Sprites\\link90x90.bmp" };
+	Font dirtyWerds{ "Sprites\\Fixedsys16x28.bmp" };
 	/********************************/
 	/*  User Variables              */
 	/********************************/

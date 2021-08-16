@@ -82,6 +82,17 @@ public:
 		const Surface& p_surf,
 		Color p_chroma = Colors::Magenta
 	);
+
+	void DrawMaskedSprite( const Vei2& p_topLeft, const Surface& p_surf );
+	void DrawMaskedSprite( Vei2& p_topLeft, const RectI& p_srcRect, const Surface& p_surf );
+	void DrawMaskedSprite(
+		Vei2& p_topLeft,
+		const RectI& p_clipRegion,
+		const RectI& p_srcRect,
+		const Surface& p_surf,
+		Color p_mask,
+		Color p_chroma = Colors::Magenta
+	);
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain{};

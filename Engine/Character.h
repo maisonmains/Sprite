@@ -22,9 +22,9 @@ private:
 	};
 
 public:
-	Character();
-	void SetDirection( MainWindow& wnd, Vec2& dir, const float& dt );
-	void SetSequence( Vec2& dir );
+	Character( const std::string& p_fileName );
+	void SetDirection( MainWindow& wnd, Vec2& dir);
+	void SetSequence( Vec2& dir, const float& dt );
 	void Update( MainWindow& wnd, Vec2& dir, const float& dt );
 	void Draw( Graphics& gfx );
 

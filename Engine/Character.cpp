@@ -2,9 +2,9 @@
 
 #include "Character.h"
 
-Character::Character()
+Character::Character( const std::string& p_fileName )
 	:
-	surf( Surface( "Sprites\\link90x90.bmp" ) ),
+	surf( Surface( p_fileName ) ),
 	dims( 90 ),
 	sequences( Sequence::StandingDown ),
 	maxHoldTime( 0.16f ),
@@ -27,7 +27,6 @@ Character::Character()
 				Vei2{ 0, dims * i }, dims 
 			) 
 		);
-
 	}
 
 	for( int i = int( Sequence::WalkingLeft ); i < int( Sequence::Count ); i++ )
@@ -45,7 +44,7 @@ Character::Character()
 	}
 }
 
-void Character::SetDirection( MainWindow& wnd, Vec2& dir, const float& dt )
+void Character::SetDirection( MainWindow& wnd, Vec2& dir )
 {
 	if( wnd.kbd.KeyIsPressed( VK_LEFT ) )
 	{
@@ -63,11 +62,9 @@ void Character::SetDirection( MainWindow& wnd, Vec2& dir, const float& dt )
 	{
 		dir.y += 1.0f;
 	}
-
-	pos += ( vel * dt );
 }
 
-void Character::SetSequence( Vec2& dir )
+void Character::SetSequence( Vec2& dir, const float& dt )
 {
 	if( dir.x < 0.0f )
 	{
@@ -106,12 +103,13 @@ void Character::SetSequence( Vec2& dir )
 	}
 
 	vel = dir * speed;
+	pos += ( vel * dt );
 }
 
 void Character::Update( MainWindow& wnd, Vec2& dir, const float& dt )
 {
-	SetDirection( wnd, dir, dt );
-	SetSequence( dir );
+	SetDirection( wnd, dir);
+	SetSequence( dir, dt );
 	animations [int( sequences )].Update( Vei2( pos ), dt );
 }
 
