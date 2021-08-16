@@ -159,7 +159,6 @@
     <ClInclude Include="VeI2.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Aimation.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="COMInitializer.cpp" />

@@ -469,12 +469,12 @@ void Graphics::DrawMaskedSprite( const Vei2& p_topLeft, const Surface& p_surf )
 
 	const RectI sprite{ 32, 32 * 2, 48, 48 * 2 };
 
-	DrawSprite( Vei2{ p_topLeft }, sprite, p_surf );
+	DrawMaskedSprite( Vei2{ p_topLeft }, sprite, p_surf );
 }
 
 void Graphics::DrawMaskedSprite( Vei2& p_topLeft, const RectI& p_srcRect, const Surface& p_surf )
 {
-	DrawSprite( p_topLeft, GetScreenRect(), p_srcRect, p_surf );
+	DrawMaskedSprite( p_topLeft, GetScreenRect(), p_srcRect, p_surf, Colors::White );
 }
 
 void Graphics::DrawMaskedSprite
@@ -524,6 +524,86 @@ void Graphics::DrawMaskedSprite
 			if( pixel != p_chroma )
 			{
 				PutPixel( ( p_topLeft.x + ( x - srcRectTopLeft.x ) ), ( p_topLeft.y + ( y - srcRectTopLeft.y ) ), p_mask );
+			}
+		}
+	}
+}
+
+void Graphics::DrawFadedSprite( const Vei2& p_topLeft, const Surface& p_surf )
+{
+	assert( p_topLeft.x >= 0 );
+	assert( p_topLeft.x < int( Graphics::ScreenWidth ) );
+	assert( p_topLeft.y >= 0 );
+	assert( p_topLeft.y < int( Graphics::ScreenHeight ) );
+
+	const RectI sprite{ 32, 32 * 2, 48, 48 * 2 };
+
+	DrawFadedSprite( Vei2{ p_topLeft }, sprite, p_surf );
+}
+
+void Graphics::DrawFadedSprite( Vei2& p_topLeft, const RectI& p_srcRect, const Surface& p_surf )
+{
+	DrawFadedSprite( p_topLeft, GetScreenRect(), p_srcRect, p_surf );
+}
+
+void Graphics::DrawFadedSprite
+(
+	Vei2& p_topLeft,
+	const RectI& p_clipRegion,
+	const RectI& p_srcRect,
+	const Surface& p_surf,
+	Color p_chroma
+)
+{
+	Vei2 srcRectTopLeft{ p_srcRect.left, p_srcRect.top };
+	Vei2 srcRectBottomRight{ p_srcRect.right, p_srcRect.bottom };
+
+	//clip left of sprite
+	if( p_topLeft.x < p_clipRegion.left )
+	{
+		srcRectTopLeft.x -= p_topLeft.x - p_clipRegion.left;
+		p_topLeft.x = p_clipRegion.left;
+	}
+
+	//clip top of sprite
+	if( p_topLeft.y < p_clipRegion.top )
+	{
+		srcRectTopLeft.y -= p_topLeft.y - p_clipRegion.top;
+		p_topLeft.y = p_clipRegion.top;
+	}
+
+	//clip right of sprite
+	if( p_topLeft.x + ( p_srcRect.GetWidth() ) >= p_clipRegion.right )
+	{
+		srcRectBottomRight.x -= ( p_topLeft.x + p_srcRect.GetWidth() ) - p_clipRegion.right;
+	}
+
+	//clip botto of sprite
+	if( p_topLeft.y + ( p_srcRect.GetHeight() ) >= p_clipRegion.bottom )
+	{
+		srcRectBottomRight.y -= ( p_topLeft.y + p_srcRect.GetHeight() ) - p_clipRegion.bottom;
+	}
+
+	for( int y{ srcRectTopLeft.y }; y < srcRectBottomRight.y; y++ )
+	{
+		for( int x{ srcRectTopLeft.x }; x < srcRectBottomRight.x; x++ )
+		{
+			const Color pixel{ p_surf.GetPixel( x, y ) };
+			if( pixel != p_chroma )
+			{
+				const int xPos = ( p_topLeft.x + ( x - srcRectTopLeft.x ) );
+				const int yPos = ( p_topLeft.y + ( y - srcRectTopLeft.y ) );
+
+				Color background = pSysBuffer [xPos + ( Graphics::ScreenWidth * yPos )];
+
+				Color avg
+				(
+					( background.GetR() + pixel.GetR() ) / 2,
+					( background.GetG() + pixel.GetG() ) / 2,
+					( background.GetB() + pixel.GetB() ) / 2
+				);
+
+				PutPixel( xPos, yPos, avg );
 			}
 		}
 	}

@@ -26,7 +26,7 @@ Animation::Animation( Surface& p_surf, const int& frameCount , const float& p_ma
 
 void Animation::Draw( Graphics& gfx )
 {
-	gfx.DrawSprite( pos, frames[frameIndex], surf );
+	gfx.DrawFadedSprite( pos, frames[frameIndex], surf );
 }
 
 void Animation::Draw( Graphics& gfx, const RectI& clipRegion )
