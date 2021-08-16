@@ -11,6 +11,7 @@ public:
 	void Draw( Graphics& gfx );
 	void Draw( Graphics& gfx, const RectI& clipRegion );
 	void Update( const Vei2& p_pos, const float& dt );
+	void ActivateEffect( bool& p_effectFlag, const float& dt );
 
 private:
 	void AdvanceFrame();
@@ -25,4 +26,8 @@ private:
 	const float maxHoldTime{};
 
 	Vei2 pos{};
+
+	const float maxEffectTime{};
+	float effectTimeLapsed{};
+	bool effectState{};
 };

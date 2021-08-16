@@ -460,7 +460,7 @@ void Graphics::DrawSprite
 	}
 }
 
-void Graphics::DrawMaskedSprite( const Vei2& p_topLeft, const Surface& p_surf )
+void Graphics::DrawMaskedSprite( const Vei2& p_topLeft, const Surface& p_surf, Color p_mask )
 {
 	assert( p_topLeft.x >= 0 );
 	assert( p_topLeft.x < int( Graphics::ScreenWidth ) );
@@ -469,12 +469,12 @@ void Graphics::DrawMaskedSprite( const Vei2& p_topLeft, const Surface& p_surf )
 
 	const RectI sprite{ 32, 32 * 2, 48, 48 * 2 };
 
-	DrawMaskedSprite( Vei2{ p_topLeft }, sprite, p_surf );
+	DrawMaskedSprite( Vei2{ p_topLeft }, sprite, p_surf, p_mask );
 }
 
-void Graphics::DrawMaskedSprite( Vei2& p_topLeft, const RectI& p_srcRect, const Surface& p_surf )
+void Graphics::DrawMaskedSprite( Vei2& p_topLeft, const RectI& p_srcRect, const Surface& p_surf, Color p_mask )
 {
-	DrawMaskedSprite( p_topLeft, GetScreenRect(), p_srcRect, p_surf, Colors::White );
+	DrawMaskedSprite( p_topLeft, GetScreenRect(), p_srcRect, p_surf, p_mask );
 }
 
 void Graphics::DrawMaskedSprite

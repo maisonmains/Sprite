@@ -23,10 +23,10 @@ private:
 
 public:
 	Character( const std::string& p_fileName );
-	void SetDirection( MainWindow& wnd, Vec2& dir);
-	void SetSequence( Vec2& dir, const float& dt );
 	void Update( MainWindow& wnd, Vec2& dir, const float& dt );
 	void Draw( Graphics& gfx );
+	void SetDirection( MainWindow& wnd, Vec2& dir );
+	void SetSequence( Vec2& dir, const float& dt );
 
 private:
 	Surface surf{};
@@ -40,4 +40,5 @@ private:
 	Vec2 vel{};
 	const float speed{ };
 	
+	bool affectInjury{};
 };

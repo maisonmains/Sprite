@@ -44,6 +44,19 @@ Character::Character( const std::string& p_fileName )
 	}
 }
 
+void Character::Update( MainWindow& wnd, Vec2& dir, const float& dt )
+{
+	SetDirection( wnd, dir );
+	SetSequence( dir, dt );
+	animations [int( sequences )].Update( Vei2( pos ), dt );
+	animations [int( sequences )].ActivateEffect( affectInjury, dt );
+}
+
+void Character::Draw( Graphics& gfx )
+{
+	animations [int( sequences )].Draw( gfx );
+}
+
 void Character::SetDirection( MainWindow& wnd, Vec2& dir )
 {
 	if( wnd.kbd.KeyIsPressed( VK_LEFT ) )
@@ -61,6 +74,10 @@ void Character::SetDirection( MainWindow& wnd, Vec2& dir )
 	else if( wnd.kbd.KeyIsPressed( VK_DOWN ) )
 	{
 		dir.y += 1.0f;
+	}
+	else if( wnd.kbd.KeyIsPressed( VK_SPACE ) )
+	{
+		affectInjury = true;
 	}
 }
 
@@ -104,16 +121,4 @@ void Character::SetSequence( Vec2& dir, const float& dt )
 
 	vel = dir * speed;
 	pos += ( vel * dt );
-}
-
-void Character::Update( MainWindow& wnd, Vec2& dir, const float& dt )
-{
-	SetDirection( wnd, dir);
-	SetSequence( dir, dt );
-	animations [int( sequences )].Update( Vei2( pos ), dt );
-}
-
-void Character::Draw( Graphics& gfx )
-{
-	animations[int( sequences )].Draw( gfx );
 }

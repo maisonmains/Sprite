@@ -6,7 +6,8 @@ Animation::Animation( Surface& p_surf, const int& frameCount , const float& p_ma
 	surf( p_surf ), 
 	dims( p_dims ),
 	maxHoldTime( p_maxHoldTime ),
-	pos( p_pos )
+	pos( p_pos ),
+	maxEffectTime( p_maxHoldTime * 4.0f )
 {
 	frames.reserve( frameCount );
 
@@ -26,12 +27,26 @@ Animation::Animation( Surface& p_surf, const int& frameCount , const float& p_ma
 
 void Animation::Draw( Graphics& gfx )
 {
-	gfx.DrawFadedSprite( pos, frames[frameIndex], surf );
+	if( effectState )
+	{
+		gfx.DrawMaskedSprite( pos, frames [frameIndex], surf, Colors::Red );
+	}
+	else
+	{
+		gfx.DrawFadedSprite( pos, frames [frameIndex], surf );
+	}
 }
 
 void Animation::Draw( Graphics& gfx, const RectI& clipRegion )
 {
-	gfx.DrawSprite( pos, clipRegion, frames[frameIndex], surf );
+	if( effectState )
+	{
+		gfx.DrawMaskedSprite( pos, clipRegion, frames[frameIndex], surf, Colors::Red );
+	}
+	else
+	{
+		gfx.DrawSprite( pos, clipRegion, frames [frameIndex], surf );
+	}
 }
 
 void Animation::Update( const Vei2& p_pos, const float& dt )
@@ -43,6 +58,7 @@ void Animation::Update( const Vei2& p_pos, const float& dt )
 		AdvanceFrame();
 	}
 	pos = p_pos;
+
 }
 
 void Animation::AdvanceFrame()
@@ -50,5 +66,21 @@ void Animation::AdvanceFrame()
 	if( frameIndex++ >= frames.size() - 1 )
 	{
 		frameIndex = 0;
+	}
+}
+
+void Animation::ActivateEffect( bool& p_effectFlag, const float& dt )
+{
+	if( p_effectFlag )
+	{
+		effectState = true;
+
+		effectTimeLapsed += dt;
+		if( effectTimeLapsed >= maxEffectTime )
+		{
+			effectTimeLapsed -= maxEffectTime;
+			effectState = false;
+			p_effectFlag = false;
+		}
 	}
 }
