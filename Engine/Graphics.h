@@ -60,6 +60,7 @@ public:
 		PutPixel( x,y,{ unsigned char( r ),unsigned char( g ),unsigned char( b ) } );
 	}
 	void PutPixel( int x,int y,Color c );
+	const Color& GetPixel( int x, int y ) const;
 
 	const RectI GetScreenRect() const;
 	const Vei2 GetScreenCenter() const;
@@ -119,6 +120,6 @@ private:
 	D3D11_MAPPED_SUBRESOURCE							mappedSysBufferTexture{};
 	Color*                                              pSysBuffer = nullptr;
 public:
-	static constexpr int ScreenWidth = 800;
-	static constexpr int ScreenHeight = 600;
+	static constexpr int ScreenWidth = 1600;
+	static constexpr int ScreenHeight = 800;
 };

@@ -7,7 +7,7 @@ Animation::Animation( Surface& p_surf, const int& frameCount , const float& p_ma
 	dims( p_dims ),
 	maxHoldTime( p_maxHoldTime ),
 	pos( p_pos ),
-	maxEffectTime( p_maxHoldTime * 4.0f )
+	maxEffectTime( p_maxHoldTime * 2.0f )
 {
 	frames.reserve( frameCount );
 
@@ -45,7 +45,7 @@ void Animation::Draw( Graphics& gfx, const RectI& clipRegion )
 	}
 	else
 	{
-		gfx.DrawSprite( pos, clipRegion, frames [frameIndex], surf );
+		gfx.DrawFadedSprite( pos, clipRegion, frames [frameIndex], surf );
 	}
 }
 
