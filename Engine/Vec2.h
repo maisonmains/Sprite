@@ -1,32 +1,127 @@
 #pragma once
-#include "Vei2.h"
+#include <cmath>
 
-class Vec2
+template <typename T>
+class Vec2_
 {
 public:
-	Vec2() = default;
-	Vec2( float x_in,float y_in );
-	Vec2( const Vec2& src );
-	const Vec2& operator=( const Vec2& rhs );
-	Vec2 operator+( const Vec2& rhs ) const;
-	const Vec2& operator+=( const Vec2& rhs );
-	Vec2 operator*( float rhs ) const;
-	const Vec2& operator*=( float rhs );
-	Vec2 operator-( const Vec2& rhs ) const;
-	const Vec2& operator-=( const Vec2& rhs );
-	Vec2 operator/( float rhs ) const;
-	const Vec2& operator/=( float rhs );
-	const bool operator==( const Vec2& rhs ) const;
-	const bool operator!=( const Vec2& rhs ) const;
-	const bool operator>( const Vec2& rhs ) const;
-	const bool operator<( const Vec2& rhs ) const;
-	const bool operator>=( const Vec2& rhs ) const;
-	const bool operator<=( const Vec2& rhs ) const;
-	float GetLength() const;
-	float GetLengthSq() const;
-	explicit operator Vei2() const;
+
+	Vec2_() = default;
+
+	Vec2_( T x_in, T y_in )
+		:
+		x( x_in ),
+		y( y_in )
+	{
+	}
+
+	Vec2_( const Vec2_& src )
+		:
+		x( src.x ),
+		y( src.y )
+	{
+	}
+
+	template <typename S>
+	Vec2_( const Vec2_<S>& src )
+		:
+		x( ( T ) src.x ),
+		y( ( T ) src.y )
+	{
+	}
+
+	const Vec2_& operator=( const Vec2_& rhs )
+	{
+		x = rhs.x;
+		y = rhs.y;
+		return *this;
+	}
+
+	Vec2_ operator+( const Vec2_& rhs ) const
+	{
+		return Vec2_( x + rhs.x, y + rhs.y );
+	}
+
+	const Vec2_& operator+=( const Vec2_& rhs )
+	{
+		return *this = *this + rhs;
+	}
+
+	Vec2_ operator*( T rhs ) const
+	{
+		return Vec2_( x * rhs, y * rhs );
+	}
+
+	const Vec2_& operator*=( T rhs )
+	{
+		return *this = *this * rhs;
+	}
+
+	Vec2_ operator-( const Vec2_& rhs ) const
+	{
+		return Vec2_( x - rhs.x, y - rhs.y );
+	}
+
+	const Vec2_& operator-=( const Vec2_& rhs )
+	{
+		return *this = *this - rhs;
+	}
+
+	Vec2_ operator/( T rhs ) const
+	{
+		return Vec2_( x / rhs, y / rhs );
+	}
+
+	const Vec2_& operator/=( T rhs )
+	{
+		return *this = *this / rhs;
+	}
+
+	const bool operator==( const Vec2_& rhs ) const
+	{
+		return x == rhs.x && y == rhs.y;
+	}
+
+	const bool operator!=( const Vec2_& rhs ) const
+	{
+		return !( *this == rhs );
+	}
+
+	const bool operator>( const Vec2_& rhs ) const
+	{
+		return x > rhs.x && y > rhs.y;
+	}
+
+	const bool operator<( const Vec2_& rhs ) const
+	{
+		return x < rhs.x&& y < rhs.y;
+	}
+
+	const bool operator>=( const Vec2_& rhs ) const
+	{
+		return rhs.x <= x && rhs.y <= y;
+	}
+
+	const bool operator<=( const Vec2_& rhs ) const
+	{
+		return rhs.x >= x && rhs.y >= y;
+	}
+
+	T GetLength() const
+	{
+		return std::sqrt( T( GetLengthSq() ) );
+	}
+
+	T GetLengthSq() const
+	{
+		return x * x + y * y;
+	}
+
 
 public:
-	float x;
-	float y;
+	T x;
+	T y;
 };
+
+typedef Vec2_<float> Vec2;
+typedef Vec2_<int> Vei2;

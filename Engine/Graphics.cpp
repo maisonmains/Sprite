@@ -353,11 +353,6 @@ void Graphics::DrawSpriteNonChroma( const Vei2& p_topLeft, const Surface& p_surf
 
 void Graphics::DrawSpriteNonChroma( Vei2& p_topLeft, const RectI& p_srcRect, const Surface& p_surf )
 {
-	assert( p_topLeft.x >= 0 );
-	assert( p_topLeft.x < int( Graphics::ScreenWidth ) );
-	assert( p_topLeft.y >= 0 );
-	assert( p_topLeft.y < int( Graphics::ScreenHeight ) );
-
 	DrawSpriteNonChroma( p_topLeft, GetScreenRect(), p_srcRect, p_surf );
 } 
 
@@ -582,10 +577,6 @@ void Graphics::DrawFadedSprite( const Vei2& p_topLeft, const Surface& p_surf )
 
 void Graphics::DrawFadedSprite( Vei2& p_topLeft, const RectI& p_srcRect, const Surface& p_surf )
 {
-	assert( p_topLeft.x >= 0 );
-	assert( p_topLeft.x < int( Graphics::ScreenWidth ) );
-	assert( p_topLeft.y >= 0 );
-	assert( p_topLeft.y < int( Graphics::ScreenHeight ) );
 	DrawFadedSprite( p_topLeft, GetScreenRect(), p_srcRect, p_surf );
 }
 
@@ -598,10 +589,6 @@ void Graphics::DrawFadedSprite
 	Color p_chroma
 )
 {
-	assert( p_topLeft.x >= 0 );
-	assert( p_topLeft.x < int( Graphics::ScreenWidth ) );
-	assert( p_topLeft.y >= 0 );
-	assert( p_topLeft.y < int( Graphics::ScreenHeight ) );
 
 	Vei2 srcRectTopLeft{ p_srcRect.left, p_srcRect.top };
 	Vei2 srcRectBottomRight{ p_srcRect.right, p_srcRect.bottom };

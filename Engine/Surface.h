@@ -4,7 +4,7 @@
 #include <string>
 #include "ChiliWin.h"
 #include "Colors.h"
-#include "RectI.h"
+#include "Rect.h"
 
 class Surface
 {

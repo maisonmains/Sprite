@@ -49,7 +49,7 @@ void Character::Update( MainWindow& wnd, Vec2& dir, const float& dt )
 	SetDirection( wnd, dir );
 	SetSequence( dir, dt );
 	animations [int( sequences )].Update( Vei2( pos ), dt );
-	animations [int( sequences )].ActivateEffect( affectInjury, dt );
+	animations [int( sequences )].ActivateEffect( effectInjury, dt );
 }
 
 void Character::Draw( Graphics& gfx )
@@ -77,7 +77,7 @@ void Character::SetDirection( MainWindow& wnd, Vec2& dir )
 	}
 	else if( wnd.kbd.KeyIsPressed( VK_SPACE ) )
 	{
-		affectInjury = true;
+		effectInjury = true;
 	}
 }
 

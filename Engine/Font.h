@@ -1,7 +1,7 @@
 #include <string>
 
-#include "Vei2.h"
-#include "RectI.h"
+#include "Vec2.h"
+#include "Rect.h"
 #include "Graphics.h"
 #include "Surface.h"
 

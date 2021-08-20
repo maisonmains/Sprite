@@ -25,8 +25,8 @@
 #include "ChiliException.h"
 #include "Colors.h"
 #include "Surface.h"
-#include "RectI.h"
-#include "Vei2.h"
+#include "Rect.h"
+#include "Vec2.h"
 
 class Graphics
 {

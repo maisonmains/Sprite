@@ -40,5 +40,5 @@ private:
 	Vec2 vel{};
 	const float speed{ };
 	
-	bool affectInjury{};
+	bool effectInjury{};
 };
