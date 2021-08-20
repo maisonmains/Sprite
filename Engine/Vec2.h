@@ -109,7 +109,7 @@ public:
 
 	T GetLength() const
 	{
-		return std::sqrt( T( GetLengthSq() ) );
+		return ( T )std::sqrt( T( GetLengthSq() ) );
 	}
 
 	T GetLengthSq() const
@@ -117,6 +117,22 @@ public:
 		return x * x + y * y;
 	}
 
+	T Normalize()
+	{
+		return *this = GetNormalized();
+	}
+
+	T GetNormalized()
+	{
+		const T length = GetLength();
+
+		if( length > (T)0 )
+		{
+			return *this * ( (T)1 / length );
+		}
+
+		return *this;
+	}
 
 public:
 	T x;

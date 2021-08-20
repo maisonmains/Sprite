@@ -18,7 +18,7 @@ void Font::DrawText( const std::string& p_text, Graphics& p_gfx, const Vei2& p_p
 {
 	Vei2 ogPos{ p_pos };
 	Vei2 curPos{ ogPos };
-	Vei2 curGlyph{ };
+	Effects::Mask mask( Colors::White, Colors::White );
 
 	const char* c{ p_text.data() };
 	
@@ -30,7 +30,7 @@ void Font::DrawText( const std::string& p_text, Graphics& p_gfx, const Vei2& p_p
 		}
 		else if( *c != '\n' )
 		{
-			p_gfx.DrawMaskedSprite( curPos, p_gfx.GetScreenRect(), MapGlyphRect( *c ), glyphSheet, Colors::White, Colors::White );
+			p_gfx.DrawSprite( curPos, p_gfx.GetScreenRect(), MapGlyphRect( *c ), glyphSheet, mask );
 			curPos.x += glyphWidth;
 		}
 		else

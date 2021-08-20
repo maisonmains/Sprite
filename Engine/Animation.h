@@ -3,6 +3,7 @@
 #include "Vec2.h"
 #include "Rect.h"
 #include "Graphics.h"
+#include "Effects.h"
 
 class Animation
 {

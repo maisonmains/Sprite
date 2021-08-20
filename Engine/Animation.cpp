@@ -29,11 +29,11 @@ void Animation::Draw( Graphics& gfx )
 {
 	if( effectState )
 	{
-		gfx.DrawMaskedSprite( pos, frames [frameIndex], surf, Colors::Red );
+		gfx.DrawSprite( pos, frames [frameIndex], surf, Effects::Mask{ Colors::Red } );
 	}
 	else
 	{
-		gfx.DrawFadedSprite( pos, frames [frameIndex], surf );
+		gfx.DrawSprite( pos, frames [frameIndex], surf, Effects::Transparency() );
 	}
 }
 
@@ -41,11 +41,11 @@ void Animation::Draw( Graphics& gfx, const RectI& clipRegion )
 {
 	if( effectState )
 	{
-		gfx.DrawMaskedSprite( pos, clipRegion, frames[frameIndex], surf, Colors::Red );
+		gfx.DrawSprite( pos, clipRegion, frames[frameIndex], surf, Effects::Mask{ Colors::Red } );
 	}
 	else
 	{
-		gfx.DrawFadedSprite( pos, clipRegion, frames [frameIndex], surf );
+		gfx.DrawSprite( pos, clipRegion, frames [frameIndex], surf, Effects::Transparency() );
 	}
 }
 

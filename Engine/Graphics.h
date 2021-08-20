@@ -27,6 +27,7 @@
 #include "Surface.h"
 #include "Rect.h"
 #include "Vec2.h"
+#include <cassert>
 
 class Graphics
 {
@@ -59,51 +60,94 @@ public:
 	{
 		PutPixel( x,y,{ unsigned char( r ),unsigned char( g ),unsigned char( b ) } );
 	}
-	void PutPixel( int x,int y,Color c );
+	void PutPixel( const int& x, const int& y,Color c );
 	const Color& GetPixel( int x, int y ) const;
 
 	const RectI GetScreenRect() const;
 	const Vei2 GetScreenCenter() const;
 
-	void DrawSpriteNonChroma( const Vei2& p_topLeft, const Surface& p_surf );
-	void DrawSpriteNonChroma( Vei2& p_topLeft, const RectI& p_srcRect, const Surface& p_surf );
-	void DrawSpriteNonChroma( 
-		Vei2& p_topLeft, 
-		const RectI& p_clipRegion, 
-		const RectI& p_srcRect, 
-		const Surface& p_surf
-	);
+	template <typename E> 
+	void DrawSprite( const Vei2& p_topLeft, const Surface& p_surf, E effect )
+	{
+		DrawSprite( p_topLeft, p_surf.GetRect(), p_surf, effect );
+	}
 
-	void DrawSprite( const Vei2& p_topLeft, const Surface& p_surf );
-	void DrawSprite( Vei2& p_topLeft, const RectI& p_srcRect, const Surface& p_surf );
-	void DrawSprite(
+	template <typename E>
+	void DrawSprite( Vei2& p_topLeft, const RectI& p_srcRect, const Surface& p_surf, E effect )
+	{
+		assert( p_srcRect.left >= 0);
+		assert( p_srcRect.right <= p_surf.GetWidth() );
+		assert( p_srcRect.top >= 0 );
+		assert( p_srcRect.bottom <= p_surf.GetHeight() );
+
+		DrawSprite( p_topLeft, GetScreenRect(), p_srcRect, p_surf, effect );
+	}
+
+	template <typename E>
+	void DrawSprite
+	(
 		Vei2& p_topLeft,
 		const RectI& p_clipRegion,
 		const RectI& p_srcRect,
-		const Surface& p_surf,
-		Color p_chroma = Colors::Magenta
-	);
+		const Surface& p_surf, 
+		E effect
+	)
+	{
+		assert( p_srcRect.left >= 0 );
+		assert( p_clipRegion.left >= 0 );
+		assert( p_srcRect.right <= p_surf.GetWidth() );
+		assert( ( p_clipRegion.right <= Graphics::ScreenWidth ) );
+		assert( p_srcRect.top >= 0 );
+		assert( p_clipRegion.top >= 0 );
+		assert( p_srcRect.bottom <= p_surf.GetHeight() );
+		assert( ( p_clipRegion.bottom <= Graphics::ScreenHeight ) );
 
-	void DrawMaskedSprite( const Vei2& p_topLeft, const Surface& p_surf, Color p_mask );
-	void DrawMaskedSprite( Vei2& p_topLeft, const RectI& p_srcRect, const Surface& p_surf, Color p_mask );
-	void DrawMaskedSprite(
-		Vei2& p_topLeft,
-		const RectI& p_clipRegion,
-		const RectI& p_srcRect,
-		const Surface& p_surf,
-		Color p_mask,
-		Color p_chroma = Colors::Magenta
-	);
+		Vei2 srcRectTopLeft{ p_srcRect.left, p_srcRect.top };
+		Vei2 srcRectBottomRight{ p_srcRect.right, p_srcRect.bottom };
 
-	void DrawFadedSprite( const Vei2& p_topLeft, const Surface& p_surf );
-	void DrawFadedSprite( Vei2& p_topLeft, const RectI& p_srcRect, const Surface& p_surf );
-	void DrawFadedSprite(
-		Vei2& p_topLeft,
-		const RectI& p_clipRegion,
-		const RectI& p_srcRect,
-		const Surface& p_surf,
-		Color p_chroma = Colors::Magenta
-	);
+		//clip left of sprite
+		if( p_topLeft.x < p_clipRegion.left )
+		{
+			srcRectTopLeft.x -= p_topLeft.x - p_clipRegion.left;
+			p_topLeft.x = p_clipRegion.left;
+		}
+
+		//clip top of sprite
+		if( p_topLeft.y < p_clipRegion.top )
+		{
+			srcRectTopLeft.y -= p_topLeft.y - p_clipRegion.top;
+			p_topLeft.y = p_clipRegion.top;
+		}
+
+		//clip right of sprite
+		if( p_topLeft.x + ( p_srcRect.GetWidth() ) >= p_clipRegion.right )
+		{
+			srcRectBottomRight.x -= ( p_topLeft.x + p_srcRect.GetWidth() ) - p_clipRegion.right;
+		}
+
+		//clip botto of sprite
+		if( p_topLeft.y + ( p_srcRect.GetHeight() ) >= p_clipRegion.bottom )
+		{
+			srcRectBottomRight.y -= ( p_topLeft.y + p_srcRect.GetHeight() ) - p_clipRegion.bottom;
+		}
+
+		for( int y{ srcRectTopLeft.y }; y < srcRectBottomRight.y; y++ )
+		{
+			for( int x{ srcRectTopLeft.x }; x < srcRectBottomRight.x; x++ )
+			{
+				const int xPos = ( p_topLeft.x + ( x - srcRectTopLeft.x ) );
+				const int yPos = ( p_topLeft.y + ( y - srcRectTopLeft.y ) );
+
+				effect
+				(
+					*this,
+					xPos,
+					yPos,
+					p_surf.GetPixel( x, y )
+				);
+			}
+		}
+	}
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain{};

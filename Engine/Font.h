@@ -4,6 +4,7 @@
 #include "Rect.h"
 #include "Graphics.h"
 #include "Surface.h"
+#include "Effects.h"
 
 class Font
 {
