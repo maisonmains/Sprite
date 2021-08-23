@@ -84,6 +84,14 @@ public:
 	}
 
 	template <typename E>
+	/*
+	* Templating the function allows arbitrary
+	* data types to be accepted as a parameter.
+	* Being templatized will also allow for
+	* template deduction, essentially we dont need to decalre
+	* the type( e.g DrawSprite<Effectd::Faded>( parameters ); )
+	* when calling DrawSprite.
+	*/
 	void DrawSprite
 	(
 		Vei2& p_topLeft,

@@ -23,7 +23,7 @@ public:
 	}
 
 	template <typename S>
-	Vec2_( const Vec2_<S>& src )
+	explicit Vec2_( const Vec2_<S>& src )
 		:
 		x( ( T ) src.x ),
 		y( ( T ) src.y )

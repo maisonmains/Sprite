@@ -3,15 +3,26 @@
 #include "Colors.h" 
 #include "Graphics.h"
 
+//Functor namespace
 namespace Effects
 {
+	//Visual Effect Flag states
+	enum class VFX
+	{
+		Injury,
+		Transparency,
+		None
+	};
+
 	class Copy
 	{
 	public:
+
 		void operator()( Graphics& gfx, const int& xPos, const int& yPos, const Color& src ) const
 		{
 			gfx.PutPixel( xPos, yPos, src );
 		}
+
 	};
 
 	class Chroma
@@ -71,8 +82,15 @@ namespace Effects
 
 	class Transparency
 	{
+	/*
+	* Setting a default chroma value here
+	* will make will work nicely with the default constructor.
+	* Instantiation will be easier later, parameters are optional,
+	* thus the custom constructor.
+	*/
 	public:
 		Transparency() = default;
+
 		Transparency( Color p_chroma )
 			:
 			chroma( p_chroma )

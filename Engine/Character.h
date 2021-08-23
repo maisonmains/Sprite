@@ -7,6 +7,7 @@
 
 class Character
 {
+
 private:
 	enum class Sequence
 	{
@@ -27,7 +28,7 @@ public:
 	void Draw( Graphics& gfx );
 	void SetDirection( MainWindow& wnd, Vec2& dir );
 	void SetSequence( Vec2& dir, const float& dt );
-
+	void SetEffect( MainWindow& wnd );
 private:
 	Surface surf{};
 	const int dims{};
@@ -40,5 +41,5 @@ private:
 	Vec2 vel{};
 	const float speed{ };
 	
-	bool effectInjury{};
+	Effects::VFX vfx{};
 };

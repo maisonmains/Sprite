@@ -8,7 +8,8 @@ Character::Character( const std::string& p_fileName )
 	dims( 90 ),
 	sequences( Sequence::StandingDown ),
 	maxHoldTime( 0.16f ),
-	speed( maxHoldTime * 1000 )
+	speed( maxHoldTime * 1000 ),
+	vfx( Effects::VFX::None )
 	
 {
 	pos = Vec2( float( ( Graphics::ScreenWidth / 2 ) - dims / 2 ), float( ( Graphics::ScreenHeight / 2 ) - dims / 2 ) );
@@ -24,7 +25,7 @@ Character::Character( const std::string& p_fileName )
 				surf, 
 				int( Sequence::StandingRight ), 
 				maxHoldTime, Vei2( pos ), 
-				Vei2{ 0, dims * i }, dims 
+				Vei2{ 0, dims * i }, dims, vfx
 			) 
 		);
 	}
@@ -38,7 +39,7 @@ Character::Character( const std::string& p_fileName )
 				surf, 
 				int( Sequence::WalkingLeft ), maxHoldTime, Vei2( pos ), 
 				Vei2{ dims, dims *  ( i - int( Sequence::WalkingLeft ) ) }, 
-				dims 
+				dims, vfx 
 			) 
 		);
 	}
@@ -48,8 +49,9 @@ void Character::Update( MainWindow& wnd, Vec2& dir, const float& dt )
 {
 	SetDirection( wnd, dir );
 	SetSequence( dir, dt );
+	SetEffect( wnd );
 	animations [int( sequences )].Update( Vei2( pos ), dt );
-	animations [int( sequences )].ActivateEffect( effectInjury, dt );
+	animations [int( sequences )].SenseEffect( vfx, dt );
 }
 
 void Character::Draw( Graphics& gfx )
@@ -74,10 +76,6 @@ void Character::SetDirection( MainWindow& wnd, Vec2& dir )
 	else if( wnd.kbd.KeyIsPressed( VK_DOWN ) )
 	{
 		dir.y += 1.0f;
-	}
-	else if( wnd.kbd.KeyIsPressed( VK_SPACE ) )
-	{
-		effectInjury = true;
 	}
 }
 
@@ -121,4 +119,16 @@ void Character::SetSequence( Vec2& dir, const float& dt )
 
 	vel = dir * speed;
 	pos += ( vel * dt );
+}
+
+void Character::SetEffect( MainWindow& wnd )
+{
+	if( wnd.kbd.KeyIsPressed( VK_SPACE ) )
+	{
+		vfx = Effects::VFX::Injury;
+	}
+	else if( wnd.kbd.KeyIsPressed( VK_CONTROL ) )
+	{
+		vfx = Effects::VFX::Transparency;
+	}
 }
