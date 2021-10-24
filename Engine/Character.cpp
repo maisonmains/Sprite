@@ -7,7 +7,7 @@ Character::Character( const std::string& p_fileName )
 	surf( Surface( p_fileName ) ),
 	dims( 90 ),
 	sequences( Sequence::StandingDown ),
-	maxHoldTime( 0.16f ),
+	maxHoldTime( 1.0f ),
 	speed( maxHoldTime * 1000 ),
 	vfx( Effects::VFX::None )
 	
@@ -130,5 +130,9 @@ void Character::SetEffect( MainWindow& wnd )
 	else if( wnd.kbd.KeyIsPressed( VK_CONTROL ) )
 	{
 		vfx = Effects::VFX::Transparency;
+	}
+	else if( wnd.kbd.KeyIsPressed( VK_TAB ) )
+	{
+		vfx = Effects::VFX::Liminality;
 	}
 }

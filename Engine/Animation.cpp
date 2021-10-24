@@ -36,13 +36,14 @@ Animation::Animation
 }
 
 void Animation::Draw( Graphics& gfx )
-{
+{		
+	const Color chroma{ Colors::Magenta };
 	switch( effectState )
 	{
 
 	case Effects::VFX::None:
 
-		gfx.DrawSprite( pos, frames[frameIndex], surf, Effects::Chroma{} );
+		gfx.DrawSprite( pos, frames[frameIndex], surf, Effects::Chroma{ chroma } );
 		break;
 
 	case Effects::VFX::Injury:
@@ -58,7 +59,31 @@ void Animation::Draw( Graphics& gfx )
 	* Ideally, perform zero/brace initialization, as usual,
 	* directly instantiate in the function call or without the call,
 	*/
-	gfx.DrawSprite( pos, frames [frameIndex], surf, Effects::Transparency{} );
+		gfx.DrawSprite( pos, frames [frameIndex], surf, Effects::Transparency{} );
+		break;
+
+	case Effects::VFX::Liminality:
+
+		gfx.DrawSprite
+		( 
+			pos, 
+			frames[frameIndex], 
+			surf, 
+			[&]( Graphics& gfx, const int& xPos, const int& yPos, const Color& src )
+			{
+				if( src != chroma )
+				{
+					const Color lim
+					(
+						//Negative effect
+						unsigned char( src.GetR() * -1 ),
+						unsigned char( src.GetG() * -1 ),
+						unsigned char( src.GetB() * -1 )
+					);
+					gfx.PutPixel( xPos, yPos, lim );
+				}
+			}
+		);
 		break;
 	}
 }
@@ -116,6 +141,7 @@ void Animation::SenseEffect( Effects::VFX& p_effectFlag, const float& dt )
 
 	case Effects::VFX::Injury:
 	case Effects::VFX::Transparency:
+	case Effects::VFX::Liminality:
 
 		if( effectState == Effects::VFX::None )
 		{
